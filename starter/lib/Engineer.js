@@ -31,7 +31,7 @@ class Engineer extends Employee {
     // Return Github
 
     getGithub() {
-        return this.email
+        return this.github
     };
 
     // Return Engineer
