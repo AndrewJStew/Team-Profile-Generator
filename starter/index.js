@@ -9,6 +9,11 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
+const { default: ExpandPrompt } = require("inquirer/lib/prompts/expand");
+const { resolve } = require("path");
+
+//Array to house employee info
+const devTeamArray = []
 
 //Manager prompts
 const addManager = function () {
@@ -16,8 +21,8 @@ const addManager = function () {
     return inquirer.prompt([{
         type: 'input',
         name: 'name',
-        message: 'Enter team manager'
-    validate: nameEntry => {
+        message: 'Enter team manager',
+        validate: nameEntry => {
             if (nameEntry) {
                 return true;
             } else {
@@ -61,64 +66,102 @@ const addManager = function () {
             }
         }
     }]).then(managerEntry => {
+        //manager variables
         const { name, id, email, officeNumber } = managerEntry;
-        const manager = new Manager (name, id, email, officeNumber);
-        // populate manager info
-        // promptForNexEmployee ()
+        const manager = new Manager(name, id, email, officeNumber);
+
+        devTeamArray.push(manager);
+        console.log(manager);
     })
-    //Employee prompts
-    const promptForNextEmployee = () => {
-        inquirer.prompt([{
-            // choice of 3
-        }]).then(response => {
-            if (this.engineer) {
-                promptForEngineer
-            } else if (this.Intern) {
-                promptForIntern
-            } else {use the functionality from page - template to generate the team }
+};
 
-            //    promptForEngineer
-            // else if intern
-            //    promptForIntern
-            // else
-            //    use the functionality from page-template to generate the team
-        })
+//addManager()
+//Employee prompts
+//promptForNexEmployee ()
+const promptForNextEmployee = function () {
+    return inquirer.prompt([{
+        type: "list",
+        message: "Select which employee you wish to add next",
+        name: "nextEmployee",
+        choices: [
+            "Engineer",
+            "intern",
+            {
+                name: "There are no more employees to add",
+                value: false
+            }
+        ]
+    },
+    //Engineer name
+    {
+        message: "what is the Engineer's name?",
+        name: "name",
+        when: ({ nextEmployee }) => nextEmployee === "Engineer"
+    },
+    //Interns name
+    {
+        message: "what is the Intern's name?",
+        name: "name",
+        when: ({ nextEmployee }) => nextEmployee === "Intern"
+    },
+    //Engineer ID
+    {
+        message: "what is the Engineer's ID?",
+        name: "id",
+        when: ({ nextEmployee }) => nextEmployee === "Engineer"
+    },
+    //Intern ID
+    {
+        message: "what is the Intern's ID?",
+        name: "id",
+        when: ({ nextEmployee }) => nextEmployee === "Intern"
+    },
+
+    //Engineer Email
+    {
+        message: "what is the Engineer's Email?",
+        name: "email",
+        when: ({ nextEmployee }) => nextEmployee === "Engineer"
+    },
+    //Intern Email
+    {
+        message: "what is the Intern's Email?",
+        name: "email",
+        when: ({ nextEmployee }) => nextEmployee === "Intern"
+    },
+
+    //Engineer Github
+    {
+        message: "what is the Engineer's GitHub user info?",
+        name: "github",
+        when: ({ nextEmployee }) => nextEmployee === "Engineer"
+    },
+
+    //Intern School
+    {
+        message: "where did the intern go to school?",
+        name: "school",
+        when: ({ nextEmployee }) => nextEmployee === "Intern"
     }
+    ]).then(response => {
+        if (response.nextEmployee) {
+            switch (response.nextEmployee) {
+                case "Engineer":
+                    const engineer = new Engineer(response.name, response.id, response.email, response.github);
+                    devTeamArray.push(engineer);
+                    break;
+                case "Intern":
+                    const intern = new intern(response.name, response.id, response.email, response.school);
+                    devTeamArray.push(intern);
+                    break;
+            }
+            return promptForNextEmployee().then(() => resolve());
+        } else {
+            return resolve();
+        }
+    })
+}
 
-    const promptForEngineer = () => {
-        inquirer.prompt([{
-            //engineer questions
-        }]).then(response => {
-            // add new engineer to employees array
-            // promptForNextEmployee
-        })
-    }
-
-    const promptForIntern = () => {
-        inquirer.prompt([{
-            //intern questions
-        }]).then(response => {
-            // add new intern to employees array
-            // promptForNextEmployee
-        })
-    }
-
-    const buildPage = () => {
-        // render(myArrayOfTeamMembers)
-    }
-
-    const promptForManager = () => {
-        inquirer.prompt([{
-            //Manager questions
-        }]).then(response => {
-            // add new manager to employees array
-            // promptForNextEmployee
-        })
-    }
-
-    const buildPage = () => {
-        //generate new HTMl and drop the string in there 
-    }
-
-// // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
+addManager().then(() => {
+    return promptForNextEmployee();
+});
