@@ -85,7 +85,7 @@ const promptForNextEmployee = function () {
         name: "nextEmployee",
         choices: [
             "Engineer",
-            "intern",
+            "Intern",
             {
                 name: "There are no more employees to add",
                 value: false
@@ -151,7 +151,7 @@ const promptForNextEmployee = function () {
                     devTeamArray.push(engineer);
                     break;
                 case "Intern":
-                    const intern = new intern(response.name, response.id, response.email, response.school);
+                    const intern = new Intern(response.name, response.id, response.email, response.school);
                     devTeamArray.push(intern);
                     break;
             }
