@@ -1,0 +1,24 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "this application will take in information about employees on a software engineering team, then generate an HTML webpage that displays summaries for each person.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "todo"
+  },
+  "author": "Andrew J Stewart",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.4.3"
+  },
+  "dependencies": {
+    "inquirer": "^6.5.0"
+  }
+}
