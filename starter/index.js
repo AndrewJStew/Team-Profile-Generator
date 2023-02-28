@@ -162,6 +162,24 @@ const promptForNextEmployee = function () {
     })
 }
 
+//Create HTML
+const createHTML = (htmlPage) => {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+
+    fs.writeFile(outputPath, htmlPage, "utf-8", (err) => {
+        if (err) throw err;
+        console.log(`Complete! Check out your Team Profile at ${outputPath}`)
+    });
+}
+
+//Manager, Engineer && Intern call
 addManager().then(() => {
     return promptForNextEmployee();
+}).then(() => {
+    const htmlTemplate = render(devTeamArray)
+    createHTML(htmlTemplate);
+}).catch((err) => {
+    console.log(err);
 });

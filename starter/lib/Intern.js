@@ -14,7 +14,7 @@ class Intern extends Employee {
         return this.email;
     }
 
-    getsSchool() {
+    getSchool() {
         return this.school;
     }
 
