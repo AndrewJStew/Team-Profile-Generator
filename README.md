@@ -26,7 +26,11 @@ npm run test
 
 ## Usage
 
-![Generated_HTML]()
+Generated HTML
+![Screenshot 2023-02-28 at 13 05 29](https://user-images.githubusercontent.com/117686053/221864115-3430bff2-3500-4a64-9e47-813753e9f10a.png)
+
+App in action
+![Team profile generator](https://user-images.githubusercontent.com/117686053/221863738-968e7dab-ab79-46c6-92cb-43c4c34709a7.gif)
 
 * Start the project in your terminal by entering `npm start` and follow the prompts development team member data.
 * Once there are no more team members to enter, the application will generate a HTML page with the team data. 
